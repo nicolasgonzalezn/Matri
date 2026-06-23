@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nico & Nathalie — Amalfi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --limon:#E8D44D;
+    --ultramar:#1B4F8C;
+    --celeste:#A9C9D9;
+    --blanco:#FBFAF6;
+    --oliva:#6E7C53;
+    --tinta:#152233;
+    --ease: cubic-bezier(.22,1,.36,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--blanco);
+    color:var(--tinta);
+    font-family:'Montserrat',sans-serif;
+    overflow-x:hidden;
+    width:100%;
+  }
+  .serif{font-family:'Cormorant Garamond',serif;}
+
+  /* ---------- progress bar ---------- */
+  .progress{
+    position:fixed; top:0; left:0; height:3px; width:0%;
+    background:linear-gradient(90deg,var(--limon),var(--ultramar));
+    z-index:999; transition:width .1s linear;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative; height:100vh; min-height:680px;
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+  .hero video{
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; filter:saturate(1.05) brightness(.85);
+  }
+  .hero::after{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(21,34,51,.15) 0%, rgba(21,34,51,.55) 100%);
+  }
+  .hero-content{
+    position:relative; z-index:2; text-align:center; color:var(--blanco);
+    padding:0 6vw;
+  }
+  .hero-eyebrow{
+    font-size:.72rem; letter-spacing:.35em; text-transform:uppercase;
+    opacity:.85; margin-bottom:1.2rem; font-weight:400;
+  }
+  .hero-names{
+    font-family:'Cormorant Garamond',serif; font-weight:400;
+    font-size:clamp(3rem,14vw,6rem); line-height:1; letter-spacing:.01em;
+  }
+  .hero-names em{font-style:italic; color:var(--limon); font-weight:300;}
+  .hero-sub{
+    margin-top:1.4rem; font-size:.85rem; letter-spacing:.25em; text-transform:uppercase;
+  }
+  .scroll-cue{
+    position:absolute; bottom:2.2rem; left:50%; transform:translateX(-50%);
+    z-index:2; color:var(--blanco); display:flex; flex-direction:column;
+    align-items:center; gap:.5rem; font-size:.65rem; letter-spacing:.3em;
+  }
+  .scroll-cue span.line{
+    width:1px; height:34px; background:var(--blanco); opacity:.6;
+    animation:pulseLine 2.2s var(--ease) infinite;
+  }
+  @keyframes pulseLine{0%{transform:scaleY(.3);opacity:.2;}50%{transform:scaleY(1);opacity:.8;}100%{transform:scaleY(.3);opacity:.2;}}
+
+  /* ---------- generic narrative section frame ---------- */
+  section{
+    position:relative; padding:9rem 7vw 9rem;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+
+  /* ---------- INTRO LETTER ---------- */
+  .intro{
+    background:var(--blanco);
+    text-align:center;
+  }
+  .intro .drop{
+    font-family:'Cormorant Garamond',serif; font-size:clamp(1.4rem,4.5vw,2.1rem);
+    line-height:1.6; max-width:720px; margin:0 auto; font-weight:400; font-style:italic;
+    color:var(--tinta);
+  }
+  .intro .drop .first{
+    font-size:3.4em; float:left; line-height:.78; padding-right:.12em;
+    color:var(--ultramar); font-style:normal;
+  }
+  .intro .sign{margin-top:2.2rem; letter-spacing:.25em; font-size:.72rem; text-transform:uppercase; color:var(--oliva);}
+
+  /* ---------- COUNTDOWN — kinetic, no cards ---------- */
+  .countdown-wrap{
+    background:linear-gradient(160deg,var(--ultramar) 0%, #123761 100%);
+    color:var(--blanco); text-align:center; min-height:78vh;
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(232,212,77,.18), transparent 45%),
+      linear-gradient(160deg,var(--ultramar) 0%, #123761 100%);
+  }
+  .countdown-wrap .eyebrow{font-size:.72rem; letter-spacing:.35em; text-transform:uppercase; color:var(--limon); margin-bottom:1.5rem;}
+  .cd-flow{
+    display:flex; justify-content:center; align-items:baseline; gap:clamp(.4rem,2vw,1.4rem);
+    flex-wrap:wrap; font-family:'Cormorant Garamond',serif;
+  }
+  .cd-unit{display:flex; flex-direction:column; align-items:center;}
+  .cd-num{
+    font-size:clamp(3.2rem,13vw,7rem); font-weight:300; line-height:1;
+    font-variant-numeric:tabular-nums;
+    transition:transform .5s var(--ease);
+  }
+  .cd-num.tick{animation:tickFlip .5s var(--ease);}
+  @keyframes tickFlip{0%{transform:translateY(-6px); opacity:.3;}100%{transform:translateY(0); opacity:1;}}
+  .cd-sep{font-size:clamp(2rem,8vw,4rem); font-weight:200; opacity:.3; align-self:center;}
+  .cd-label{margin-top:.4rem; font-size:.62rem; letter-spacing:.3em; text-transform:uppercase; opacity:.65; font-family:'Montserrat',sans-serif;}
+  .cd-date{margin-top:2.6rem; font-size:.85rem; letter-spacing:.2em; text-transform:uppercase; opacity:.85;}
+
+  /* ---------- DETAILS — magazine layout ---------- */
+  .details{
+    background:var(--blanco); min-height:90vh;
+    display:grid; grid-template-columns:1fr; gap:3rem;
+  }
+  .details-head{font-family:'Cormorant Garamond',serif; font-weight:400; font-size:clamp(2.6rem,9vw,4.6rem); line-height:1.05;}
+  .details-head .it{color:var(--ultramar); font-style:italic;}
+  .coord-grid{
+    display:grid; grid-template-columns:1fr; gap:2.4rem; margin-top:1rem;
+  }
+  .coord-block{border-top:.5px solid rgba(21,34,51,.25); padding-top:1.1rem;}
+  .coord-block .tag{font-size:.65rem; letter-spacing:.3em; text-transform:uppercase; color:var(--oliva);}
+  .coord-block .val{font-family:'Cormorant Garamond',serif; font-size:1.5rem; margin-top:.4rem;}
+  .coord-block .fine{font-size:.72rem; letter-spacing:.08em; color:#5b6573; margin-top:.3rem; font-variant-numeric:tabular-nums;}
+  .map-link{
+    display:inline-block; margin-top:1rem; font-size:.7rem; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--ultramar); border-bottom:1px solid var(--ultramar); padding-bottom:.2rem;
+  }
+
+  /* ---------- ASYMMETRIC GALLERY ---------- */
+  .gallery{ padding:6rem 0; background:var(--blanco); }
+  .gallery-grid{
+    display:grid; grid-template-columns:repeat(6,1fr); gap:.6rem; padding:0 4vw;
+  }
+  .gallery-grid img{width:100%; height:100%; object-fit:cover; display:block;}
+  .g1{grid-column:1/5; grid-row:1/3; height:46vh;}
+  .g2{grid-column:5/7; grid-row:1/2; height:22vh; margin-top:2.4rem;}
+  .g3{grid-column:5/7; grid-row:2/3; height:22vh;}
+  .g4{grid-column:1/3; grid-row:3/4; height:30vh; margin-top:1.2rem;}
+  .g5{grid-column:3/7; grid-row:3/4; height:30vh; margin-top:1.2rem;}
+
+  /* ---------- ITINERARY — asymmetric hairline timeline ---------- */
+  .itinerary{ background:#F4F6EE; min-height:100vh; }
+  .it-head{font-family:'Cormorant Garamond',serif; font-size:clamp(2.2rem,7vw,3.4rem); margin-bottom:3.5rem;}
+  .it-head .it2{color:var(--oliva); font-style:italic;}
+  .timeline{ position:relative; padding-left:1.6rem; }
+  .timeline::before{
+    content:''; position:absolute; left:0; top:.4rem; bottom:.4rem; width:.5px; background:var(--oliva); opacity:.5;
+  }
+  .tl-item{ position:relative; padding:0 0 2.8rem 1.6rem; }
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-item::before{
+    content:''; position:absolute; left:-.34rem; top:.35rem; width:7px; height:7px; border-radius:50%;
+    background:var(--limon); border:1px solid var(--ultramar);
+  }
+  .tl-time{font-size:.68rem; letter-spacing:.25em; text-transform:uppercase; color:var(--ultramar); font-weight:500;}
+  .tl-title{font-family:'Cormorant Garamond',serif; font-size:1.5rem; margin-top:.3rem;}
+  .tl-desc{font-size:.82rem; color:#4d5a4a; margin-top:.3rem; max-width:420px; line-height:1.5;}
+  .tl-item:nth-child(even){padding-left:3.4rem;}
+  .tl-item:nth-child(even)::before{left:1.46rem;}
+  .timeline::after{
+    content:''; position:absolute; left:1.8rem; top:0; bottom:0; width:.5px; background:transparent;
+  }
+
+  /* ---------- DRESS CODE — fashion capsule mosaic ---------- */
+  .dresscode{ background:var(--tinta); color:var(--blanco); min-height:100vh; }
+  .dc-head{font-family:'Cormorant Garamond',serif; font-size:clamp(2.2rem,7vw,3.4rem); margin-bottom:.6rem;}
+  .dc-head em{color:var(--limon); font-style:italic;}
+  .dc-sub{font-size:.82rem; opacity:.7; max-width:480px; margin-bottom:3rem; line-height:1.6;}
+  .swatch-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:.5rem;
+  }
+  .swatch{
+    aspect-ratio:1/1.05; position:relative; overflow:hidden; border-radius:2px;
+  }
+  .swatch img{width:100%; height:100%; object-fit:cover; transition:transform .8s var(--ease);}
+  .swatch:hover img{transform:scale(1.08);}
+  .swatch .name{
+    position:absolute; bottom:.6rem; left:.7rem; font-size:.62rem; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--blanco); text-shadow:0 1px 6px rgba(0,0,0,.6);
+  }
+  .dc-note{margin-top:2.6rem; font-size:.78rem; opacity:.65; font-style:italic; font-family:'Cormorant Garamond',serif; font-size:1.2rem;}
+
+  /* ---------- GIFTS / MUSIC — glassmorphism ---------- */
+  .giftsmusic{
+    position:relative; min-height:100vh; overflow:hidden;
+    background:linear-gradient(150deg,var(--celeste) 0%, var(--blanco) 60%);
+  }
+  .gm-bg{position:absolute; inset:0; opacity:.5; object-fit:cover; width:100%; height:100%;}
+  .gm-inner{position:relative; z-index:2;}
+  .gm-head{font-family:'Cormorant Garamond',serif; font-size:clamp(2.2rem,7vw,3.2rem); margin-bottom:3rem; color:var(--tinta);}
+  .gm-head em{color:var(--ultramar); font-style:italic;}
+  .glass-grid{display:grid; grid-template-columns:1fr; gap:1.4rem;}
+  .glass-card{
+    background:rgba(255,255,255,.35);
+    backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,.6);
+    border-radius:14px; padding:2rem 1.8rem;
+    box-shadow:0 8px 32px rgba(21,34,51,.08);
+  }
+  .glass-card .tag{font-size:.65rem; letter-spacing:.3em; text-transform:uppercase; color:var(--ultramar);}
+  .glass-card h3{font-family:'Cormorant Garamond',serif; font-size:1.6rem; margin:.6rem 0 1rem; font-weight:500;}
+  .glass-card p{font-size:.85rem; color:#3a4250; line-height:1.6;}
+  .copy-row{
+    display:flex; align-items:center; justify-content:space-between; gap:1rem;
+    background:rgba(255,255,255,.5); border-radius:8px; padding:.8rem 1rem; margin-top:1rem;
+  }
+  .copy-row span{font-size:.8rem; font-weight:500; letter-spacing:.03em;}
+  .copy-btn{
+    border:1px solid var(--ultramar); background:transparent; color:var(--ultramar);
+    font-size:.65rem; letter-spacing:.15em; text-transform:uppercase; padding:.5rem .9rem;
+    border-radius:30px; cursor:pointer; transition:all .3s var(--ease); white-space:nowrap;
+  }
+  .copy-btn:hover{background:var(--ultramar); color:var(--blanco);}
+  .song-input{
+    width:100%; margin-top:1rem; padding:.75rem .9rem; border:none; border-bottom:1px solid var(--ultramar);
+    background:rgba(255,255,255,.5); font-family:'Montserrat',sans-serif; font-size:.85rem; border-radius:6px 6px 0 0;
+    outline:none;
+  }
+  .song-submit{
+    margin-top:.8rem; background:var(--ultramar); color:var(--blanco); border:none; padding:.65rem 1.4rem;
+    font-size:.65rem; letter-spacing:.2em; text-transform:uppercase; border-radius:30px; cursor:pointer;
+  }
+
+  /* ---------- RSVP — editorial letter form ---------- */
+  .rsvp{
+    background:var(--blanco); min-height:100vh; display:flex; align-items:center;
+  }
+  .rsvp-letter{
+    font-family:'Cormorant Garamond',serif; font-size:clamp(1.3rem,4vw,1.9rem); line-height:2.1;
+    color:var(--tinta); max-width:760px;
+  }
+  .rsvp-eyebrow{font-family:'Montserrat',sans-serif; font-size:.68rem; letter-spacing:.3em; text-transform:uppercase; color:var(--oliva); margin-bottom:2rem; display:block;}
+  .blank{
+    display:inline-block; min-width:140px; border-bottom:1px solid var(--tinta); background:transparent;
+    font-family:'Cormorant Garamond',serif; font-size:1em; color:var(--ultramar); padding:0 .2rem;
+    outline:none; text-align:center;
+  }
+  select.blank{appearance:none; cursor:pointer;}
+  .rsvp-submit{
+    margin-top:3rem; background:var(--ultramar); color:var(--blanco); border:none;
+    padding:1rem 2.4rem; font-size:.7rem; letter-spacing:.25em; text-transform:uppercase;
+    border-radius:30px; cursor:pointer; transition:all .35s var(--ease);
+    font-family:'Montserrat',sans-serif;
+  }
+  .rsvp-submit:hover{background:var(--tinta); transform:translateY(-2px);}
+
+  /* ---------- footer ---------- */
+  footer{
+    background:var(--tinta); color:var(--blanco); text-align:center; padding:3.5rem 6vw;
+    font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-style:italic;
+  }
+  footer .small{display:block; margin-top:.8rem; font-family:'Montserrat',sans-serif; font-size:.65rem; letter-spacing:.25em; opacity:.6; font-style:normal;}
+
+  @media(min-width:760px){
+    section{padding:11rem 9vw;}
+    .coord-grid{grid-template-columns:1fr 1fr;}
+    .glass-grid{grid-template-columns:1fr 1fr;}
+  }
+
+  .reveal{opacity:0; transform:translateY(36px); transition:opacity 1s var(--ease), transform 1s var(--ease);}
+  .reveal.show{opacity:1; transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<!-- ============ HERO ============ -->
+<section class="hero" style="padding:0;">
+  <!-- REEMPLAZAR CON TU VIDEO AQUÍ -->
+  <video autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?q=80&w=1200&auto=format&fit=crop">
+    <source src="https://videos.pexels.com/video-files/2257010/2257010-hd_1920_1080_24fps.mp4" type="video/mp4">
+  </video>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Nos casamos</div>
+    <h1 class="hero-names">Nicolás <em>&</em> Nathalie</h1>
+    <div class="hero-sub">14 · Marzo · 2027 — Santiago de Chile</div>
+  </div>
+  <div class="scroll-cue"><span class="line"></span>DESLIZA</div>
+</section>
+
+<!-- ============ INTRO LETTER ============ -->
+<section class="intro reveal">
+  <p class="drop"><span class="first">E</span>n el Mediterráneo el tiempo se mide distinto: en el largo de una ola, en el aroma del limón recién cortado, en el celeste que separa el cielo del mar sin que nadie note el límite. Así queremos que se sienta este día — sin costuras, sin apuro, una sola corriente de luz que los lleve de la mano hasta nosotros.</p>
+  <div class="sign">Nicolás & Nathalie</div>
+</section>
+
+<!-- ============ COUNTDOWN ============ -->
+<section class="countdown-wrap reveal">
+  <div class="eyebrow">Cuenta regresiva</div>
+  <div class="cd-flow" id="countdown">
+    <div class="cd-unit"><div class="cd-num" id="cd-d">00</div><div class="cd-label">Días</div></div>
+    <div class="cd-sep">·</div>
+    <div class="cd-unit"><div class="cd-num" id="cd-h">00</div><div class="cd-label">Horas</div></div>
+    <div class="cd-sep">·</div>
+    <div class="cd-unit"><div class="cd-num" id="cd-m">00</div><div class="cd-label">Min</div></div>
+    <div class="cd-sep">·</div>
+    <div class="cd-unit"><div class="cd-num" id="cd-s">00</div><div class="cd-label">Seg</div></div>
+  </div>
+  <div class="cd-date">Sábado 14 de Marzo, 2027</div>
+</section>
+
+<!-- ============ DETALLES ============ -->
+<section class="details reveal">
+  <h2 class="details-head">El lugar,<br><span class="it">la hora,</span><br>el encuentro.</h2>
+  <div class="coord-grid">
+    <div class="coord-block">
+      <div class="tag">Ceremonia</div>
+      <div class="val">Capilla Sagrada Familia</div>
+      <div class="fine">18:30 HRS · LAT -33.4372, LON -70.6506</div>
+      <a class="map-link" href="https://maps.google.com" target="_blank">Ver mapa →</a>
+    </div>
+    <div class="coord-block">
+      <div class="tag">Recepción</div>
+      <div class="val">Viña Santa Amalia</div>
+      <div class="fine">20:00 HRS · LAT -33.6122, LON -70.7891</div>
+      <a class="map-link" href="https://maps.google.com" target="_blank">Ver mapa →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALERÍA ASIMÉTRICA ============ -->
+<section class="gallery" style="padding-left:0; padding-right:0;">
+  <div class="gallery-grid">
+    <!-- REEMPLAZAR CON TUS FOTOS AQUÍ -->
+    <img class="g1" src="https://images.unsplash.com/photo-1530841344095-d8a2ed3e0d6f?q=80&w=1200&auto=format&fit=crop" alt="">
+    <img class="g2" src="https://images.unsplash.com/photo-1601581987809-a73c84236f0e?q=80&w=800&auto=format&fit=crop" alt="">
+    <img class="g3" src="https://images.unsplash.com/photo-1504512485720-7d83a16ee930?q=80&w=800&auto=format&fit=crop" alt="">
+    <img class="g4" src="https://images.unsplash.com/photo-1551918120-9739cb430c6d?q=80&w=900&auto=format&fit=crop" alt="">
+    <img class="g5" src="https://images.unsplash.com/photo-1499363536502-87642509e31b?q=80&w=1200&auto=format&fit=crop" alt="">
+  </div>
+</section>
+
+<!-- ============ ITINERARIO ============ -->
+<section class="itinerary reveal">
+  <h2 class="it-head">El recorrido <span class="it2">del día</span></h2>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-time">18:00</div>
+      <div class="tl-title">Llegada de invitados</div>
+      <div class="tl-desc">Recepción con limonada de albahaca y vista al jardín de olivos.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-time">18:30</div>
+      <div class="tl-title">Ceremonia</div>
+      <div class="tl-desc">Capilla Sagrada Familia — los votos, bajo luz de atardecer.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-time">19:30</div>
+      <div class="tl-title">Cóctel mediterráneo</div>
+      <div class="tl-desc">Aperitivos frente al lago artificial de la viña.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-time">21:00</div>
+      <div class="tl-title">Cena & brindis</div>
+      <div class="tl-desc">Mesas largas bajo enredaderas e iluminación cálida.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-time">23:30</div>
+      <div class="tl-title">Fiesta</div>
+      <div class="tl-desc">La pista se abre — hasta que el cielo amanezca azul ultramar.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DRESS CODE ============ -->
+<section class="dresscode reveal">
+  <h2 class="dc-head">Vestimenta <em>formal mediterránea</em></h2>
+  <p class="dc-sub">Lino fresco, tonos de limón, celeste empolvado y blanco. Evitemos negro absoluto — pensemos en una tarde griega.</p>
+  <div class="swatch-grid">
+    <!-- REEMPLAZAR CON TUS TEXTURAS AQUÍ -->
+    <div class="swatch"><img src="https://images.unsplash.com/photo-1604335398980-2b1a9b2c3d4d?q=80&w=500&auto=format&fit=crop" alt=""><div class="name">Lino crudo</div></div>
+    <div class="swatch"><img src="https://images.unsplash.com/photo-1617137968427-85924c800a22?q=80&w=500&auto=format&fit=crop" alt=""><div class="name">Azulejo azul</div></div>
+    <div class="swatch"><img src="https://images.unsplash.com/photo-1600857062241-98e5dba7f214?q=80&w=500&auto=format&fit=crop" alt=""><div class="name">Limón</div></div>
+    <div class="swatch"><img src="https://images.unsplash.com/photo-1542718610-a1d656d1884c?q=80&w=500&auto=format&fit=crop" alt=""><div class="name">Olivo mate</div></div>
+    <div class="swatch"><img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=500&auto=format&fit=crop" alt=""><div class="name">Celeste empolvado</div></div>
+    <div class="swatch"><img src="https://images.unsplash.com/photo-1519046904884-53103b34b206?q=80&w=500&auto=format&fit=crop" alt=""><div class="name">Blanco puro</div></div>
+  </div>
+  <div class="dc-note">"Vístanse como si caminaran por Oia al atardecer."</div>
+</section>
+
+<!-- ============ REGALOS / MÚSICA ============ -->
+<section class="giftsmusic reveal">
+  <div class="gm-inner">
+    <h2 class="gm-head">Regalos <em>& sonido</em></h2>
+    <div class="glass-grid">
+      <div class="glass-card">
+        <div class="tag">Mesa de regalos</div>
+        <h3>Lista de novios</h3>
+        <p>Su presencia es el regalo más grande. Si desean contribuir a nuestra luna de miel mediterránea, pueden hacerlo aquí:</p>
+        <div class="copy-row">
+          <span>Cuenta RUT · 12.345.678-9</span>
+          <button class="copy-btn" onclick="copyData(this,'12.345.678-9')">Copiar</button>
+        </div>
+      </div>
+      <div class="glass-card">
+        <div class="tag">Playlist colaborativa</div>
+        <h3>¿Qué canción no puede faltar?</h3>
+        <p>Ayúdanos a armar la banda sonora de la fiesta.</p>
+        <input class="song-input" type="text" placeholder="Nombre de la canción + artista">
+        <br>
+        <button class="song-submit" onclick="this.previousElementSibling.previousElementSibling.value=''; alert('¡Gracias por tu sugerencia!')">Enviar</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RSVP ============ -->
+<section class="rsvp reveal">
+  <div>
+    <span class="rsvp-eyebrow">Confirmación de asistencia</span>
+    <p class="rsvp-letter">
+      Yo, <input class="blank" type="text" placeholder="tu nombre" style="width:220px;">,
+      confirmo que
+      <select class="blank">
+        <option value="">elige una opción</option>
+        <option>asistiré con alegría</option>
+        <option>no podré asistir</option>
+      </select>
+      a la boda de Nicolás & Nathalie el 14 de marzo de 2027. Asistiremos en total
+      <input class="blank" type="number" min="1" max="4" placeholder="0" style="width:60px;">
+      persona(s), y quisiera contarles que
+      <input class="blank" type="text" placeholder="alergia / restricción (opcional)" style="width:260px;">.
+    </p>
+    <button class="rsvp-submit" onclick="alert('¡Gracias por confirmar! Nos vemos en Amalfi 🍋')">Confirmar asistencia</button>
+  </div>
+</section>
+
+<footer>
+  "El amor es la única travesía sin mapa que vale la pena."
+  <span class="small">NICOLÁS & NATHALIE · 14.03.2027 · SANTIAGO DE CHILE</span>
+</footer>
+
+<script>
+  // progress bar
+  window.addEventListener('scroll', ()=>{
+    const h = document.documentElement;
+    const pct = (h.scrollTop)/(h.scrollHeight - h.clientHeight)*100;
+    document.getElementById('progress').style.width = pct+'%';
+  });
+
+  // reveal on scroll
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
+  },{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+  // countdown
+  const target = new Date('2027-03-14T18:30:00');
+  function pad(n){return String(n).padStart(2,'0');}
+  function tick(){
+    const now = new Date();
+    let diff = target - now;
+    if(diff<0) diff=0;
+    const d = Math.floor(diff/(1000*60*60*24));
+    const h = Math.floor(diff/(1000*60*60)%24);
+    const m = Math.floor(diff/(1000*60)%60);
+    const s = Math.floor(diff/1000%60);
+    document.getElementById('cd-d').textContent = pad(d);
+    document.getElementById('cd-h').textContent = pad(h);
+    document.getElementById('cd-m').textContent = pad(m);
+    document.getElementById('cd-s').textContent = pad(s);
+  }
+  tick();
+  setInterval(tick,1000);
+
+  function copyData(btn, text){
+    navigator.clipboard.writeText(text).then(()=>{
+      const orig = btn.textContent;
+      btn.textContent = '¡Copiado!';
+      setTimeout(()=>btn.textContent=orig, 1800);
+    });
+  }
+</script>
+</body>
+</html>
